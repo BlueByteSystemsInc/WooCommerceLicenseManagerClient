@@ -18,10 +18,13 @@ namespace WooCommerceLicenseManagerClient
             private readonly string _baseUrl;
             private readonly string _authorizationHeader;
 
+            public string UserAgent { get; set; }
+
             public WooCommerceApiClient(string baseUrl, string authorizationHeader)
             {
                 _baseUrl = baseUrl;
                 _authorizationHeader = authorizationHeader;
+              
             }
 
             public async Task<string> GetCustomerNameFromOrderAsync(int orderId)
@@ -40,7 +43,9 @@ namespace WooCommerceLicenseManagerClient
             {
                 var client = new RestClient(_baseUrl);
                 var request = new RestRequest(endpoint, method);
+                
                 request.AddHeader("Authorization", _authorizationHeader);
+           
 
                 var response = await client.ExecuteAsync(request);
 
@@ -75,7 +80,7 @@ namespace WooCommerceLicenseManagerClient
         // Product response class
         public class ProductResponse
         {
-            public int Id { get; set; }
+            public int? Id { get; set; }
             public string Name { get; set; }
             // Add other relevant properties as needed
         }
@@ -83,7 +88,7 @@ namespace WooCommerceLicenseManagerClient
         // Order response class
         public class OrderResponse
         {
-            public int Id { get; set; }
+            public int? Id { get; set; }
             public BillingInfo Billing { get; set; }
             // Add other relevant properties as needed
         }
